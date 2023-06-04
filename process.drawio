@@ -1,0 +1,16 @@
+<mxfile host="app.diagrams.net" modified="2023-06-04T21:33:00.179Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" etag="19dxfHFexEVEJtU6hgCp" version="21.3.7" type="device">
+  <diagram name="Página-1" id="OVnLgmk5gt4ca5L7EqFy">
+    <mxGraphModel dx="1428" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="963" pageHeight="787" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="f8GYNng8Xa2rdSCEsREv-1" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Criação de Ticket usando o&lt;br&gt;Formulário de Requisição de Serviço&lt;br&gt;(bud-ev.ua.pt)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="290" width="290" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="f8GYNng8Xa2rdSCEsREv-2" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Resposta ao ticket com&lt;br&gt;&amp;nbsp;os dados de acesso aos Recursos&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="700" y="284" width="290" height="110" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
