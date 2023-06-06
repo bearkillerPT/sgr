@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import './App.css';
 import Login from './Screens/Login';
@@ -6,13 +6,50 @@ import TodoList from './Screens/TodoList';
 import ListDetail from './Screens/ListDetail';
 import Register from './Screens/Register';
 
+// Mock data for user todo lists and entries
+const mockTodoLists : {
+  [username: string]: {
+    id: number;
+    name: string;
+    entries: {
+      id: number;
+      text: string;
+      completed: boolean;
+    }[];
+  }[];
+}
+ = {
+  admin: [
+    {
+      id: 1,
+      name: 'Work',
+      entries: [
+        { id: 1, text: 'Finish report', completed: false },
+        { id: 2, text: 'Attend meeting', completed: true },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Personal',
+      entries: [
+        { id: 1, text: 'Go grocery shopping', completed: false },
+        { id: 2, text: 'Exercise', completed: true },
+        { id: 3, text: 'Read a book', completed: false },
+      ],
+    },
+    // Add more todo lists as needed
+  ],
+};
 
-
-
-
-
-
-
+// Handler for retrieving user's todo lists
+const getUserTodoLists = (username: string) => {
+  // Check if the user exists in the mock data
+  if (mockTodoLists.hasOwnProperty(username)) {
+    return mockTodoLists[username];
+  } else {
+    return [];
+  }
+};
 
 const App: React.FC = () => {
   const handleLogin = (username: string, password: string) => {
@@ -63,7 +100,7 @@ const App: React.FC = () => {
           // Perform any necessary actions, such as redirecting to the login page or displaying a success message
         } else {
           // Registration failed
-          console.error('Registration failed:', data.message);
+          console.error('Registration failed: js', data.message);
           // Handle the error, such as displaying an error message to the user
         }
       })

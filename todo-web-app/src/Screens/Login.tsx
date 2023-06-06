@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import '../App.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 
 const Login: React.FC<{ onLogin: (username: string, password: string) => void }> = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
     };
@@ -18,11 +18,15 @@ const Login: React.FC<{ onLogin: (username: string, password: string) => void }>
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onLogin(username, password);
+        if (username.trim() === 'admin' && password.trim() === 'admin') {
+            setIsAuthenticated(true);
+        }
+        //onLogin(username, password);
     };
 
     return (
         <div className="container">
+            {isAuthenticated && <Navigate to='/list' />}
             <h2 className='sectionHeader'>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
