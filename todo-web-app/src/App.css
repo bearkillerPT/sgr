@@ -1,0 +1,106 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  margin-bottom: 10px;
+}
+
+.todo-list li a {
+  text-decoration: none;
+  color: #000;
+}
+
+.todo-list li a:hover {
+  text-decoration: underline;
+}
+.appHeaderTitle {
+  font-size: 3.5em;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5em;
+}
+.appHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 5%;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.register-link {
+  text-decoration: none;
+  color: white;
+}
+.noDecoratorLink {
+  text-decoration: none;
+}
+
+.login-button {
+  margin: 5px 0;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #45a049;
+}
+
+.sectionHeader{
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5em;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
