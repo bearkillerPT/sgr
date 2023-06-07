@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const ListDetail = ({ listId = "123" }) => {
+import './ListDetail.css'
+
+const ListDetail = () => {
+    const { listName } = useParams()
     // Mock data for todo list entries
     const [entries, setEntries] = useState([
-        { id: 1, text: 'Finish report', completed: false },
-        { id: 2, text: 'Attend meeting', completed: true },
+        //{ id: 1, text: 'Test completed', completed: true },
+        //{ id: 2, text: 'Test not completed', completed: false },
+        { id: 1, text: 'Test completed', completed: true },
+        { id: 2, text: 'Test not completed', completed: false }
     ]);
+
+    useEffect(() => {
+        if (scrollableDiv.current) {
+            scrollableDiv.current.scrollTop = scrollableDiv.current.scrollHeight;
+        }
+    }, [entries.length]);
 
     // State for new entry input
     const [newEntryText, setNewEntryText] = useState('');
@@ -23,15 +35,26 @@ const ListDetail = ({ listId = "123" }) => {
         }
     };
 
+    const scrollableDiv = useRef<HTMLDivElement>(null);
+
+
     return (
-        <div>
-            <h2>Todo List Details (ID: {listId})</h2>
-            <ul>
+        <div className='listContainer'>
+            <h2 className='listName'>Todo List Details ({listName})</h2>
+            <div className='listEntriesContainer' ref={scrollableDiv}>
                 {entries.map((entry) => (
-                    <li key={entry.id}>
+                    <div key={entry.id} className='entrieContainer'>
+                        
+                        <p style={{
+                            textDecoration: entry.completed ? 'line-through' : 'none',
+                            backgroundColor: entry.completed ? 'lightgreen' : 'transparent',
+                        }}>
+                            {entry.text}
+                        </p>
                         <input
                             type="checkbox"
                             checked={entry.completed}
+                            className='entryCheckbox'
                             onChange={() => {
                                 setEntries(
                                     entries.map((e) => {
@@ -44,18 +67,20 @@ const ListDetail = ({ listId = "123" }) => {
                                 );
                             }}
                         />
-                        {entry.text}
-                    </li>
+                    </div>
                 ))}
-            </ul>
-            <div>
+                
                 <input
                     type="text"
                     value={newEntryText}
+                    className='newEntryInput'
                     onChange={(e) => setNewEntryText(e.target.value)}
                     placeholder="Enter new entry"
                 />
-                <button onClick={addEntry}>Add Entry</button>
+                <button
+                    onClick={addEntry}
+                    className='addEntryButton'
+                >Add Entry</button>
             </div>
         </div>
     );

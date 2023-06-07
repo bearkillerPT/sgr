@@ -113,13 +113,13 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className='appHeader'>
-        <h1 className='appHeaderTitle'>Create your todo lists for free!</h1>
+        <h1 className='appHeaderTitle'>Manage your TODOs!</h1>
       </div>
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register onRegister={handleRegister} />} />
         <Route path="/list" element={<TodoList />} />
-        <Route path="/list/:listId" element={<ListDetail />} />
+        <Route path="/list/:listName" element={<ListDetail/>} />
       </Routes>
     </Router>
   );

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
-export interface TodoList_t {
+import './ListDetail.css';
+
+export interface TodoLists_t {
   id: number;
   name: string;
-  entries: number;
 }
 const TodoList: React.FC = () => {
-  const [lists, setLists] = useState<TodoList_t[]>([]);
+  const [lists, setLists] = useState<TodoLists_t[]>([]);
   const [newListName, setNewListName] = useState('');
 
   const handleNewListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,36 +18,52 @@ const TodoList: React.FC = () => {
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newListName.trim() === '') return;
-    const newList: TodoList_t = {
+    const newList: TodoLists_t = {
       id: Date.now(),
       name: newListName,
-      entries: 0,
     };
     setLists([...lists, newList]);
     setNewListName('');
   };
-
+  const [clickedList, setClickedList] = useState<string|undefined>(undefined);
   return (
-    <div className="container">
+    <>
+    {clickedList ? <Navigate to={'/list/' + clickedList}/> : null}
+    <div className="listEntriesContainer">
       <form onSubmit={handleAddList}>
         <div className="form-group">
           <input
             type="text"
             placeholder="List Name"
             value={newListName}
+            className='entryCheckbox'
             onChange={handleNewListNameChange}
           />
         </div>
-        <button type="submit">Add List</button>
+        <button className='addEntryButton' type="submit">Add List</button>
       </form>
-      <ul className="todo-list">
-        {lists.map((list) => (
-          <li key={list.id}>
-            <Link to={`/list/${list.id}`}>{list.name}</Link> - {list.entries} entries
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="listEntriesContainer">
+      <h2 className='listName' style={{
+        color: 'black',
+      }}>Your Lists</h2>
+        {lists.length > 0 ? lists.map((list) => (
+          <button type="submit" key={list.id} className='entrieContainer' style={{
+            width: '100%',
+            cursor: 'pointer',
+          }} onClick={()=>{
+            setClickedList(list.name);
+          }}>
+            <Link className='noDecoratorLinkListName' to={`/list/${list.name}`}>{list.name}</Link>
+          </button>
+        )): 
+        <div className='entrieContainer' style={{
+          width: '100%',
+        }}>
+          <p className='noListsText'>You have no lists yet.</p>
+        </div>
+        }
+      </div>
+    </div></>
   );
 };
 export default TodoList;
