@@ -61,8 +61,10 @@ const TodoList: React.FC = () => {
             }}>
               <Link className='noDecoratorLinkListName' to={`/list/${list.name}`}>{list.name}</Link>
               <div className='entryActions'>
-                <FaTrash onClick={()=>{
-                  setLists(lists.filter((l)=>l.id!==list.id));
+                <FaTrash style={{
+                  color: 'red',
+                }} onClick={() => {
+                  setLists(lists.filter((l) => l.id !== list.id));
                 }} />
               </div>
             </button>
