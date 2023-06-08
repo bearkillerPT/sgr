@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FaTrash } from 'react-icons/fa';
 
 import './ListDetail.css'
 
@@ -44,32 +45,40 @@ const ListDetail = () => {
             <div className='listEntriesContainer' ref={scrollableDiv}>
                 {entries.map((entry) => (
                     <div key={entry.id} className='entrieContainer'>
-                        
+
                         <p style={{
                             textDecoration: entry.completed ? 'line-through' : 'none',
                             backgroundColor: entry.completed ? 'lightgreen' : 'transparent',
                         }}>
                             {entry.text}
                         </p>
-                        <input
-                            type="checkbox"
-                            checked={entry.completed}
-                            className='entryCheckbox'
-                            onChange={() => {
-                                setEntries(
-                                    entries.map((e) => {
-                                        if (e.id === entry.id) {
-                                            e.completed = !e.completed;
+                        <div className='entryActions'>
+
+                            <input
+                                type="checkbox"
+                                checked={entry.completed}
+                                className='entryCheckbox'
+                                onChange={() => {
+                                    setEntries(
+                                        entries.map((e) => {
+                                            if (e.id === entry.id) {
+                                                e.completed = !e.completed;
+                                            }
+                                            return e;
                                         }
-                                        return e;
-                                    }
-                                    )
-                                );
-                            }}
-                        />
+                                        )
+                                    );
+                                }}
+                            />
+                            <FaTrash style={{
+                                color: 'red',
+                            }} onClick={() => {
+                                setEntries(entries.filter((e) => e.id !== entry.id))
+                            }} />
+                        </div>
+
                     </div>
                 ))}
-                
                 <input
                     type="text"
                     value={newEntryText}
