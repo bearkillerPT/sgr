@@ -1,6 +1,7 @@
 <?php
 require_once 'db.php';
 
+var_dump($_POST);
 // Read the request body
 $data = json_decode(file_get_contents('php://input'), true);
 

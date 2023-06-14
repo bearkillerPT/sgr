@@ -7,7 +7,7 @@ import ListDetail from './Screens/ListDetail';
 import Register from './Screens/Register';
 
 // Mock data for user todo lists and entries
-const mockTodoLists : {
+const mockTodoLists: {
   [username: string]: {
     id: number;
     name: string;
@@ -18,7 +18,7 @@ const mockTodoLists : {
     }[];
   }[];
 }
- = {
+  = {
   admin: [
     {
       id: 1,
@@ -84,7 +84,7 @@ const App: React.FC = () => {
   const handleRegister = (username: string, password: string) => {
     // Perform registration logic here
     // Send an AJAX request to the register.php endpoint or your preferred registration endpoint
-    fetch('/register.php', {
+    fetch('https://sgr2023.web.ua.pt/register.php', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
@@ -119,7 +119,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register onRegister={handleRegister} />} />
         <Route path="/list" element={<TodoList />} />
-        <Route path="/list/:listName" element={<ListDetail/>} />
+        <Route path="/list/:listName" element={<ListDetail />} />
       </Routes>
     </Router>
   );
