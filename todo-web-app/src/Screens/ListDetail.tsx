@@ -4,15 +4,26 @@ import { FaTrash } from 'react-icons/fa';
 
 import './ListDetail.css'
 
-const ListDetail = () => {
+const ListDetail = ({ user }: { user: string }) => {
     const { listName } = useParams()
     // Mock data for todo list entries
-    const [entries, setEntries] = useState([
-        //{ id: 1, text: 'Test completed', completed: true },
-        //{ id: 2, text: 'Test not completed', completed: false },
-        { id: 1, text: 'Test completed', completed: true },
-        { id: 2, text: 'Test not completed', completed: false }
-    ]);
+    const [entries, setEntries] = useState<{
+        entry_text: string,
+        completed: boolean,
+    }[]>([]);
+
+    useEffect(() => {
+        fetch('https://sgr2023.web.ua.pt/getEntries.php', {
+            method: 'POST',
+            body: JSON.stringify({ username: user, list_name: listName }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setEntries(data);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     useEffect(() => {
         if (scrollableDiv.current) {
@@ -27,12 +38,22 @@ const ListDetail = () => {
     const addEntry = () => {
         if (newEntryText.trim() !== '') {
             const newEntry = {
-                id: entries.length + 1,
-                text: newEntryText,
+                entry_text: newEntryText,
                 completed: false,
             };
             setEntries([...entries, newEntry]);
             setNewEntryText('');
+            fetch('https://sgr2023.web.ua.pt/addEntry.php', {
+                method: 'POST',
+                body: JSON.stringify({ username: user, list_name: listName, entry_text: newEntry.entry_text }),
+            }).then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                }
+                ).catch((err) => {
+                    console.log(err);
+                }
+                );
         }
     };
 
@@ -43,14 +64,14 @@ const ListDetail = () => {
         <div className='listContainer'>
             <h2 className='listName'>Todo List Details ({listName})</h2>
             <div className='listEntriesContainer' ref={scrollableDiv}>
-                {entries.map((entry) => (
-                    <div key={entry.id} className='entrieContainer'>
+                {entries.map((entry, index) => (
+                    <div key={index} className='entrieContainer'>
 
                         <p style={{
                             textDecoration: entry.completed ? 'line-through' : 'none',
                             backgroundColor: entry.completed ? 'lightgreen' : 'transparent',
                         }}>
-                            {entry.text}
+                            {entry.entry_text}
                         </p>
                         <div className='entryActions'>
 
@@ -60,8 +81,8 @@ const ListDetail = () => {
                                 className='entryCheckbox'
                                 onChange={() => {
                                     setEntries(
-                                        entries.map((e) => {
-                                            if (e.id === entry.id) {
+                                        entries.map((e, index2) => {
+                                            if (index === index2) {
                                                 e.completed = !e.completed;
                                             }
                                             return e;
@@ -73,7 +94,7 @@ const ListDetail = () => {
                             <FaTrash style={{
                                 color: 'red',
                             }} onClick={() => {
-                                setEntries(entries.filter((e) => e.id !== entry.id))
+                                setEntries(entries.filter((e, index2) => index !== index2))
                             }} />
                         </div>
 

@@ -1,13 +1,49 @@
 import React, { useState } from 'react';
 
 import '../App.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 
-const Login: React.FC<{ onLogin: (username: string, password: string) => void }> = ({ onLogin }) => {
+const Login: React.FC<{ setIsAuthenticatedParent: React.Dispatch<React.SetStateAction<string | undefined>> }> = ({
+    setIsAuthenticatedParent
+}) => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<string | undefined>(undefined);
+
+    const handleLogin = (username: string, password: string) => {
+        // Perform login logic here
+        // Send an AJAX request to the login.php endpoint or your preferred authentication endpoint
+        fetch('/login.php', {
+            method: 'POST',
+            body: JSON.stringify({ username, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                if (data.success) {
+                    // Login successful
+                    console.log('Login successful');
+                    setIsAuthenticated(username);
+                    setIsAuthenticatedParent(username);
+                    navigate('/list/');
+                    // Perform any necessary actions, such as updating the user's authentication status or redirecting to another page
+                } else {
+                    // Login failed
+                    console.error('Login failed:', data.message);
+                    // Handle the error, such as displaying an error message to the user
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                // Handle any errors that occurred during the login process
+            });
+    };
+
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
     };
@@ -18,16 +54,12 @@ const Login: React.FC<{ onLogin: (username: string, password: string) => void }>
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (username.trim() === 'admin' && password.trim() === 'admin') {
-            setIsAuthenticated(true);
-        }
-        //onLogin(username, password);
+        handleLogin(username, password);
+
     };
 
     return (
         <div className="container">
-            {isAuthenticated && <Navigate to='/list' />}
-            <h2 className='sectionHeader'>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input

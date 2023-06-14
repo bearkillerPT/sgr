@@ -8,10 +8,9 @@ export interface TodoLists_t {
   id: number;
   name: string;
 }
-const TodoList: React.FC = () => {
+const TodoList = ({ user }: { user: string }) => {
   const [lists, setLists] = useState<TodoLists_t[]>([]);
   const [newListName, setNewListName] = useState('');
-
   const scrollableDiv = useRef<HTMLDivElement>(null);
   const handleNewListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewListName(e.target.value);
@@ -21,6 +20,20 @@ const TodoList: React.FC = () => {
       scrollableDiv.current.scrollTop = scrollableDiv.current.scrollHeight;
     }
   }, [lists.length]);
+  useEffect(() => {
+    fetch('https://sgr2023.web.ua.pt/getLists.php', {
+      method: 'POST',
+      body: JSON.stringify({ username: user }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLists(data);
+      }).catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newListName.trim() === '') return;
@@ -30,6 +43,15 @@ const TodoList: React.FC = () => {
     };
     setLists([...lists, newList]);
     setNewListName('');
+    fetch('https://sgr2023.web.ua.pt/addList.php', {
+      method: 'POST',
+      body: JSON.stringify({ username: user, list_name: newList.name }),
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      }).catch((err) => {
+        console.log(err);
+      });
   };
   const [clickedList, setClickedList] = useState<string | undefined>(undefined);
   return (

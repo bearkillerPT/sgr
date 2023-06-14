@@ -9,7 +9,7 @@ $username = $data['username'];
 $password = $data['password'];
 
 // Query the database to check if the user exists
-$query = "SELECT * FROM users WHERE username = '$username'";
+$query = "SELECT * FROM Users WHERE username = '$username'";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {

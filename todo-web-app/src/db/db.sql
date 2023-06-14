@@ -1,21 +1,21 @@
-CREATE TABLE users (
+CREATE TABLE Users (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(255) NOT NULL,
+  username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   token VARCHAR(255)
 );
 
 CREATE TABLE lists (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  user_id INT,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  list_name VARCHAR(255) NOT NULL,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  FOREIGN KEY (username) REFERENCES Users(username)
 );
 
-CREATE TABLE list_entries (
+CREATE TABLE listEntry (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  text VARCHAR(255) NOT NULL,
+  entry_text VARCHAR(255) NOT NULL,
   completed BOOLEAN DEFAULT false,
-  list_id INT,
+  list_id INT NOT NULL UNIQUE,
   FOREIGN KEY (list_id) REFERENCES lists(id)
 );

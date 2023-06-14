@@ -6,7 +6,6 @@ $dbname = "deti-sgr";
 
 // Create a new mysqli object
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 // Check the connection
 if ($conn->connect_error) {
     die("Connection failed: php" . $conn->connect_error);

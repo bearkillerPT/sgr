@@ -1,7 +1,6 @@
 <?php
 require_once 'db.php';
 
-var_dump($_POST);
 // Read the request body
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -10,7 +9,7 @@ $username = $data['username'];
 $password = $data['password'];
 
 // Check if the username already exists in the database
-$query = "SELECT * FROM users WHERE username = '$username'";
+$query = "SELECT * FROM Users WHERE username = '$username'";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
@@ -22,7 +21,7 @@ if ($result->num_rows > 0) {
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
   // Insert the new user into the database
-  $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
+  $insertQuery = "INSERT INTO Users (username, password) VALUES ('$username', '$hashedPassword')";
   if ($conn->query($insertQuery) === true) {
     // Registration successful
     $response = array('success' => true, 'message' => 'Registration successful');
